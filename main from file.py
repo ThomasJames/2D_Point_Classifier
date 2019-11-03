@@ -130,68 +130,91 @@ if __name__ == "__main__":
         output_file.write(i + "\n")
 
 
-    # Plots visualised through the matplotlib module
-    plotter = Plotter()
-    plotter.add_point(coordinatex[1:100], coordinatey[1:100], boundbox_output[1:100])
-    plotter.add_point(coordinatex[2], coordinatey[2], boundbox_output[2])
-    plotter.add_point(coordinatex[89], coordinatey[89], boundbox_output[89])
-    plotter.add_point(coordinatex[73], coordinatey[73], boundbox_output[73])
-    plotter.add_boarder(boundboxx, boundboxy)
-    plotter.add_polygon(shapex, shapey)
-    plotter.show()
-
-    import math
+    # # Plots visualised through the matplotlib module
+    # plotter = Plotter()
+    # plotter.add_point(coordinatex[1:100], coordinatey[1:100], boundbox_output[1:100])
+    # plotter.add_point(coordinatex[2], coordinatey[2], boundbox_output[2])
+    # plotter.add_point(coordinatex[89], coordinatey[89], boundbox_output[89])
+    # plotter.add_point(coordinatex[73], coordinatey[73], boundbox_output[73])
+    # plotter.add_boarder(boundboxx, boundboxy)
+    # plotter.add_polygon(shapex, shapey)
+    # plotter.show()
+    #
+    # import math
     list = []
     # Identify boundry points on the north direction
-    def parallel_to_x_north(a):
+    # def parallel_to_x_north(a):
+    #     for i in range(19):
+    #         if coordinatex[a] == shapex[i]:
+    #             if shapey[i+1] > shapey[i] and shapey[i+1] > coordinatey[a] > shapey[i]:
+    #                 list.append("boundary")
+    #                 break
+    #             else:
+    #                 continue
+    #
+    # def parallel_to_x_south(a):
+    #     for i in range(19):
+    #         if coordinatex[a] == shapex[i]:
+    #             if shapey[i] > shapey[i+1] and shapey[i] > coordinatey[a] > shapey[i+1]:
+    #                 list.append("boundary")
+    #                 break
+    #             else:
+    #                 continue
+    #
+    # def parallel_to_y_east(a):
+    #     for i in range(19):
+    #         if coordinatey[a] == shapey[i]:
+    #             if shapex[i+1] > shapex[i] and shapex[i] < coordinatex[a] < shapex[i+1]:
+    #                 list.append("boundary")
+    #                 break
+    #             else:
+    #                 continue
+    #
+    # def parallel_to_y_west(a):
+    #     for i in range(19):
+    #         if coordinatey[a] == shapey[i]:
+    #             if shapex[i+1] < shapex[i] and shapex[i] > coordinatex[a] > shapex[i+1]:
+    #                 list.append("boundary")
+    #                 break
+    #             else:
+    #                 continue
+        # for i in range(99):
+        #     # parallel_to_x_north(i)
+        #     # parallel_to_x_south(i)
+        #     # parallel_to_y_east(i)
+        #     # parallel_to_y_west(i)
+        #     # nonparalellline(i)
+        #
+        #
+        # print(list)                               #
+
+
+    #
+    # def nonparalellline(a):
+    #     for i in range(19):
+    #         if (shapex[i+1] - shapex[i]) > 0:
+    #             if coordinatey[a] == (coordinatex[a] - shapex[i]) / (shapex[i+1] - shapex[i]) * (shapey[i+1] - shapey[i]) + shapey[i]:
+    #                 list.append('boundary')
+    #             elif (shapey[i+1] - shapey[i]) > 0:
+    #                 if coordinatex[a] == (coordinatey[a] - shapey[i]) / (shapey[i+1] - shapey[i]) * (shapex[i+1] - shapex[i]) + shapex[i]:
+    #                     list.append('boundary')
+    #             else:
+    #                 continue
+    #
+    # nonparalellline()
+    # print(list)
+
+
+    list = []
+    def polyboardercheck(a):
         for i in range(19):
-            if coordinatex[a] == shapex[i]:
-                if shapey[i+1] > shapey[i] and shapey[i+1] > coordinatey[a] > shapey[i]:
-                    list.append("boundary")
-                    break
-                else:
-                    continue
+                if shapey[1] == shapey[2]:
+                   if coordinatey[a] == (coordinatex[a] - shapex[i]) / (shapex[i+1] - shapex[i]) * (shapey[i+1] - shapey[i]) + shapey[i]:
+                        list.append('boundry')
+                   else:
+                       list.append("unclassified")
+                       break
 
-    def parallel_to_x_south(a):
-        for i in range(19):
-            if coordinatex[a] == shapex[i]:
-                if shapey[i] > shapey[i+1] and shapey[i] > coordinatey[a] > shapey[i+1]:
-                    list.append("boundary")
-                    break
-                else:
-                    continue
-
-    def parallel_to_y_east(a):
-        for i in range(19):
-            if coordinatey[a] == shapey[i]:
-                if shapex[i+1] > shapex[i] and shapex[i] < coordinatex[a] < shapex[i+1]:
-                    list.append("boundary")
-                    break
-                else:
-                    continue
-
-    def parallel_to_y_west(a):
-        for i in range(19):
-            if coordinatey[a] == shapey[i]:
-                if shapex[i+1] < shapex[i] and shapex[i] > coordinatex[a] > shapex[i+1]:
-                    list.append("boundary")
-                    break
-                else:
-                    continue
-
-    def nonparalellline(a):
-        for i in range(19):
-            if (shapex[i+1] - shapex[i]) > 0:
-                if coordinatey[a] == (coordinatex[a] - shapex[i]) / (shapex[i+1] - shapex[i]) * (shapey[i+1] - shapey[i]) + shapey[i]:
-                    list.append('boundary')
-                else:
-                    continue
-
-    for i in range(99):
-        parallel_to_x_north(i)
-        parallel_to_x_south(i)
-        parallel_to_y_east(i)
-        parallel_to_y_west(i)
-        nonparalellline(i)
-
+    polyboardercheck(1)
+    polyboardercheck(14)
     print(list)
