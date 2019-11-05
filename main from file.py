@@ -100,9 +100,9 @@ if __name__ == "__main__":
     for i in range(len(point_x)):
         plotter.add_point(point_x[i], point_y[i], boundbox_output[i])
 
-    plotter.add_boarder(boundboxx, boundboxy)
-    plotter.add_polygon(shape_x, shape_y)
-    plotter.show()
+    # plotter.add_boarder(boundboxx, boundboxy)
+    # plotter.add_polygon(shape_x, shape_y)
+    # plotter.show()
 
     # Create a list from 1 - 100, that can be used for creating an id list for the boundbox outpuy.
     count = 1
@@ -126,23 +126,23 @@ if __name__ == "__main__":
     boundary_locator = []
     def polyboardercheck2(b):
         for i in range(19):
-            if shapey[i] <= pointy[b] <= shapey[i+1]:          # if point y is between the two y values of the line
-                if pointx[b] == shapex[i] or shapex[i+1]:      # if point x is equal to one of the x values of the line
+            if shape_y[i] <= point_y[b] <= shape_y[i+1]:          # if point y is between the two y values of the line
+                if point_x[b] == shape_x[i] or shape_x[i+1]:      # if point x is equal to one of the x values of the line
                     boundary_locator.append("boundary")
                     break
-            elif shapex[i] <= pointx[b] <= shapex[i+1]:        # if point x is between the two x values of the line
-                if pointy[b] == shapey[i] or shapey[i+1]:      # if point y is equal to  one of the y values of the line
+            elif shape_x[i] <= point_x[b] <= shape_x[i+1]:        # if point x is between the two x values of the line
+                if point_y[b] == shape_y[i] or shape_y[i+1]:      # if point y is equal to  one of the y values of the line
                     boundary_locator.append("boundry")
                     break
                                                                # If pointy is equal to x solved
-            elif pointy == (pointx[b] - shapex[i]) / (shapey[i+2] - shapey[i]) * (shapey[i+2] - shapey[i]) + shapey[i]:
+            elif point_y == (point_x[b] - shape_x[i]) / (shape_y[i+2] - shape_y[i]) * (shape_y[i+2] - shape_y[i]) + shape_y[i]:
                         boundary_locator.append("boundry")
                         break
             else:
                 boundary_locator.append("unclassified")          # The point is not on the line so we add "unclassified" to the lsit
                 break
 
-    for n in range(len(pointy)):
+    for n in range(len(point_y)):
         polyboardercheck2(n)
 
         # Questions -
@@ -150,29 +150,52 @@ if __name__ == "__main__":
         # what do you do with the loop closure.
         # how do you make a statement that says something is between - not taking into account direction
 
-    print(boundary_locator)
+    # print(boundary_locator)
 
 
  # Plots visualised through the matplotlib module
 
-    plotter = Plotter()
-    for i in range(len(pointx)):
-        plotter.add_point(pointx[i], pointy[i], boundary_locator[i])
-
-    plotter.add_boarder(boundboxx, boundboxy)
-    plotter.add_polygon(shapex, shapey)
-    plotter.show()
-
-    
-
+    # plotter = Plotter()
+    # for i in range(len(point_x)):
+    #     plotter.add_point(point_x[i], point_y[i], boundary_locator[i])
+    #
+    # plotter.add_boarder(boundboxx, boundboxy)
+    # plotter.add_polygon(shape_x, shape_y)
+    # plotter.show()
 
 
 
     
-########################################################################################################################
+######################################################################################################################
+
+    intersection_list = []
+
+    def do_the_lines_intersect(a):
+        for i in range(19):
+            if point_y[a] == shape_y[i] and shape_y[i+1]:
+                intersection_list.append("the lines are parallel")
+                break
+            elif point_y[a] == shape_y[i]:
+                if point_x[i] <= shape_x[i] or shape_x[i+1]:
+                    intersection_list.append("the line crosses on an infinite number of points")
+                    break
+                else:
+                    intersection_list.append("the lines do not cross")
+                    break
+            elif shape_y[a] <= point_y[1] <= shape_y[i+1]:
+                intersection_list.append("the lines cross at one point")
+                break
+            else:
+                intersection_list.append("The lines do not intersect")
+                
+    for n in range(99):
+        do_the_lines_intersect(n)
+    print(intersection_list)
 
 
-    
+
+
+
 
 
 
