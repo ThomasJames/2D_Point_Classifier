@@ -88,6 +88,8 @@ if __name__ == "__main__":
     # Convert strings to floats
     coordinates = [[float(float(j)) for j in i] for i in coordinates]
 
+    File_reader.create_coordinates("polygon.csv")
+    print(coordinates)
 
 
     # values to define a minimum and maximum to draw the boundry box in plotter .
@@ -104,7 +106,7 @@ if __name__ == "__main__":
     # def point_location_generator:
 
     def minimumbound(x_min, x_max, y_min, y_max):
-        for i in range(len(coordinates)):
+        for i in range(len(coordinatex)):
             if x_min < (coordinatex[i]) < x_max and y_min < (coordinatey[i]) < y_max:
                 boundbox_output.append("inside")
             elif x_min == coordinatex[i] and y_min < coordinatey[i] < y_max:
@@ -161,27 +163,29 @@ if __name__ == "__main__":
 
     def polyboardercheck2(b):
         for i in range(19):
-            if shapey[i] <= coordinatey[b] <= shapey[i+1]:
-                if coordinatex[b] == shapex[i] or shapex[i+1]:
-                    list.append("boundary")
-                    break
-            elif shapex[i] <= coordinatex[b] <= shapex[i+1]:
-                if coordinatey[b] == shapey[i] or shapey[i+1]:
-                    list.append("boundry")
-                    break
-            elif
-                if coordinatey[b] == (coordinatex[b] - shapex[i]) * (shapey[i+2] - shapey[i]) + shapey[i]:
-                    list.append("boundry")
-                    break
-                    if coordinatey == (coordinatex[b] - shapex[i]) / (shapey[i+2] - shapey[i]) * (shapey[i+2] - shapey[i]) + shapey[i]:
-                        list.append("boundry")
-                        break
+            if shapey[i] <= coordinatey[b] <= shapey[i+1]:          # if point y is between the two y values of the line
+                if coordinatex[b] == shapex[i] or shapex[i+1]:      # if point x is equal to one of the x values of the line
+                    list.append("boundary")                         # add "boundry to the lsit"
+                    break                                           # Break the loop
+            elif shapex[i] <= coordinatex[b] <= shapex[i+1]:        # if point x is between the two x values of the line
+                if coordinatey[b] == shapey[i] or shapey[i+1]:      # if point y is equal to  one of the y values of the line
+                    list.append("boundry")                          # add "boundry to the lsit"
+                    break                                           #break the lloop
+                                                                    #If pointy is equal to x solved
+            elif coordinatey == (coordinatex[b] - shapex[i]) / (shapey[i+2] - shapey[i]) * (shapey[i+2] - shapey[i]) + shapey[i]:
+                        list.append("boundry")                      # add "boundry to the lsit"
+                        break                                       # Break the loop
             else:
-                list.append("unclassified")
+                list.append("unclassified")                         # The point is not on the line so we add "unclassified" to the lsit
                 break
 
     for n in range(len(coordinatex)):
         polyboardercheck2(n)
+
+        # Questions -
+        # Why doesnt the control statement work/ Why is the elif staement skipping?
+        # what do you do with the loop closure.
+        #
 
     print(list)
 
@@ -232,6 +236,15 @@ if __name__ == "__main__":
     plotter.add_boarder(boundboxx, boundboxy)
     plotter.add_polygon(shapex, shapey)
     plotter.show()
+
+
+
+
+
+    
+
+
+    
 
 
 
