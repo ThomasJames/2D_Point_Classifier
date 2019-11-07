@@ -32,21 +32,6 @@ class Plotter:
 
 def minimum_bound(p_x, p_y, a_x, a_y):
     if min(a_x) < p_x < max(a_x) and min(a_y) < p_y < max(a_y):  # is the point within the bounds of the box
-        out.append("inside")
-    elif min(a_x) == p_x and min(a_y) <= p_y <= max(a_y):  # is the point.x on the min x axis and within the y
-        out.append("boundary")
-    elif max(a_x) == p_x and min(a_y) <= p_y <= max(a_y):  # is the point.x on the max x axis and within the y
-        out.append("boundary")
-    elif min(a_y) == p_y and min(a_x) <= p_x <= max(a_x):  # is the point.y on the min y axis within the x
-        out.append("boundary")
-    elif max(a_y) == p_y and min(a_x) <= p_x <= max(a_x):  # is the point.y on the max y axis within the x
-        out.append("boundary")
-    else:
-        out.append("outside")  # else the point cant be inside or on boundry, therefore its outside
-
-
-def minimum_bound(p_x, p_y, a_x, a_y):
-    if min(a_x) < p_x < max(a_x) and min(a_y) < p_y < max(a_y):  # is the point within the bounds of the box
         return True
     elif min(a_x) == p_x and min(a_y) <= p_y <= max(a_y):
         return False
@@ -57,22 +42,22 @@ def minimum_bound(p_x, p_y, a_x, a_y):
     elif max(a_y) == p_y and min(a_x) <= p_x <= max(a_x):
         return True
     else:
-        return False  # else the point cant be inside or on boundry, therefore its outside
+        return False
 
 
-def ray_casting(p, s):
-    n = len(s) - 1
+def ray_casting(pt, sh):
+    n = len(sh) - 1
     counter = 0
     for i in range(n):
-        if (s[i][1] <= p[1] and s[i + 1][1] > p[1]) or (s[i][1] > p[1] and s[i + 1][1] <= p[1]):
-            vt = (p[1] - s[i][1]) / (s[i + 1][1] - s[i][1])
-            if p[0] < (s[i][0] + vt * (s[i + 1][0] - s[i][0])):
+        if (sh[i][1] <= pt[1] < sh[i + 1][1]) or (sh[i][1] > pt[1] >= sh[i + 1][1]):
+            vt = (pt[1] - sh[i][1]) / (sh[i + 1][1] - sh[i][1])
+            if pt[0] < (sh[i][0] + vt * (sh[i + 1][0] - sh[i][0])):
                 counter += 1
         i += 1
     return counter
 
 
-def calculate_y(x, x1, y1, x2, y2):
+def compute_y(x, x1, y1, x2, y2):
     return (x - x1) / (x2 - x1) * (y2 - y1) + y1
 
 
@@ -81,31 +66,49 @@ def is_on_line(p_x, p_y, a_x, a_y, b_x, b_y):
         return False
     elif a_x == b_x and p_x == a_x:
         return True
-    elif a_x != b_x and calculate_y(p_x, a_x, a_y, b_x, b_y) == p_y:
+    elif a_x != b_x and compute_y(p_x, a_x, a_y, b_x, b_y) == p_y:
         return True
     else:
         return False
 
+class ReadFile:
 
-class FileReader:
-    def read_points(filename):
-        with open(filename, 'r') as f:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def create_points(self):
+        with open(self, 'r') as f:
             lines = f.readlines()[1:]
             for line in lines:
                 line = line.strip().split(',')
                 point_x.append(float(line[1]))
                 point_y.append(float(line[2]))
 
-    def read_polygon(filename):
-        with open(filename, 'r') as f:
+
+    def create_polygon(self):
+        with open(self, 'r') as f:
             lines = f.readlines()[1:]
             for line in lines:
                 line = line.strip().split(',')
                 shape_x.append(float(line[1]))
                 shape_y.append(float(line[2]))
 
-    def generate_coordinates(p_x, p_y):
-        return list(map(lambda x, y: (x, y), p_x, p_y))
+
+def generate_coordinates(p_x, p_y):
+    return list(map(lambda x, y: (x, y), p_x, p_y))
+
+
+def locate_points(p_x, p_y, s_x, s_y, s, p):
+    for i in range(len(location)):
+        if not minimum_bound(p_x[i], p_y[i], s_x, s_y):
+            location[i] = "outside"
+        elif (ray_casting(p[i], s)) % 2 != 0:
+            location[i] = "inside"
+        else:
+            location[i] = "outside"
+        for j in range(len(s_x) - 1):
+            if is_on_line(p_x[i], p_y[i], s_x[j], s_y[j], s_x[j + 1], s_y[j + 1]):
+                location[i] = "boundary"
 
 
 if __name__ == "__main__":
@@ -115,30 +118,27 @@ if __name__ == "__main__":
     shape_x = []
     shape_y = []
 
-    FileReader.read_polygon("polygon.csv")
-    FileReader.read_points("input.csv")
+    ReadFile.read_polygon("polygon.csv")
+    ReadFile.read_points("input.csv")
 
     s = []
     p = []
-    location = [None] * len(point_x) 
+    location = [None] * len(point_x)
 
-    p = FileReader.generate_coordinates(point_x, point_y)
-    s = FileReader.generate_coordinates(shape_x, shape_y)
+    p = generate_coordinates(point_x, point_y)
+    s = generate_coordinates(shape_x, shape_y)
 
-
-    for i in range(len(location)):
-        if not minimum_bound(point_x[i], point_y[i], shape_x, shape_y):
-            location[i] = ("outside")
-        elif (ray_casting(p[i], s)) % 2 != 0:
-            location[i] = ("inside")
-        else:
-            location[i] = ("outside")
-        for j in range(len(shape_x) - 1):
-            if is_on_line(point_x[i], point_y[i], shape_x[j], shape_y[j], shape_x[j + 1], shape_y[j + 1]) == True:
-                location[i] = ("boundary")
+    locate_points(point_x, point_y, shape_x, shape_y, s, p)
 
     plotter = Plotter()
     for i in range(len(point_x)):
         plotter.add_point(point_x[i], point_y[i], location[i])
     plotter.add_polygon(shape_x, shape_y)
     plotter.show()
+
+    # Write the output to a csv file called mbr_output
+    output_file = open("output.csv", "w")
+    for i in location:
+        output_file.write(i + "\n")
+
+
