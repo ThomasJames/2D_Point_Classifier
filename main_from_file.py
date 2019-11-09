@@ -29,7 +29,6 @@ def minimum_bound(p_x, p_y, a_x, a_y):
     elif min(a_x) == p_x and min(a_y) <= p_y <= max(a_y):
         return 1    # if point x is equal to minimum x value, and between y values
     elif max(a_x) == p_x and min(a_y) <= p_y <= max(a_y):
-        # and between y values
         return 1
     elif min(a_y) == p_y and min(a_x) <= p_x <= max(a_x):  # if point y is equal to minimum y value -
         return 1                                           # and between x values
