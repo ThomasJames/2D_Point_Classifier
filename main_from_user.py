@@ -15,8 +15,8 @@ if __name__ == "__main__":
     answer = input("Would you like to test the default polygon? (yes/no): ")
     if answer == None:
         ReadFile.access_csv_file("polygon.csv", shape_x, shape_y)
-        shape_coordinates = generate_coordinates(shape_x, shape_y) # If no answer is given, then the default polygon is used
-    if answer == "yes":
+        shape_coordinates = generate_coordinates(shape_x, shape_y) # If no answer is given, then the default polygon
+    if answer == "yes":                                            # is used
         ReadFile.access_csv_file("polygon.csv", shape_x, shape_y)  # If yes is given, the default polygon is used
         shape_coordinates = generate_coordinates(shape_x, shape_y)
     elif answer == "no":                                           # if no is given, a path is requested from the user
