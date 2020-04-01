@@ -45,10 +45,8 @@ lines are crossing on one point.
 Class to plot points.
 
 # Input.csv / polygon.csv
-Exmample data 
+Example data 
 
-
-# 
 
 
 
