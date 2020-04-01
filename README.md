@@ -1,9 +1,8 @@
 # Classifying_Coordinates_PIP
 Program to take a coordinate, and return the location with respect to a polygon. 
-Three major functions were constructed:
 
 # Minimum Bounding 
-1. PiP is a computationally intensive operation. Therefore, it is common to first
+PiP is a computationally intensive operation. Therefore, it is common to first
 get the MBR of a polygon and test whether the point lies inside this rectangle.
 For the purposes of this assignment, the MBR can be found by simply taking
 the minimum and maximum of both coordinates of the the polygon. If a given
@@ -11,7 +10,7 @@ point lies outside this rectangle, then it is definitely outside the polygon and
 there is no need to proceed to the full PiP algorithm.
 
 # Ray Casting 
-2. The Ray Casting Algorithm - The RCA involves drawing a straight line
+The Ray Casting Algorithm - The RCA involves drawing a straight line
 (in any direction) from the test point, and counting how many times it crosses
 the boundary of the polygon. If the line crosses the boundary an odd number of
 times then the point lies inside the polygon. If the line crosses the boundary an
@@ -41,6 +40,8 @@ lines are crossing on one point.
 2. Read a list of coordinates from shell;
 3. Categorize this point into “inside”, “outside” and “boundary”;
 4. Plot the point and polygon in a plot window.
+
+
 
 
 
