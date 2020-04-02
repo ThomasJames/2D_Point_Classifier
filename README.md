@@ -47,7 +47,7 @@ Class to plot points.
 ## Input.csv / polygon.csv
 Example data 
 
-###Prerequisites
+### Prerequisites
 
 You must be running python 3.6 The following librairies will also need to be installed:
 
