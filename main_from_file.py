@@ -9,34 +9,35 @@ class ReadFile:
     def __init__(self, filename):
         self.filename = "filename"
 
-    def access_csv_file(self, pt_x, pt_y):  # Splits data into two lists of x and y for points
+     # Splits data into two lists of x and y for points
+    def access_csv_file(self, pt_x, pt_y): 
         try:
             with open(self, 'r') as f:
                 lines = f.readlines()[1:]  # Removes the first line (id,x,y)
                 for l in lines:
-                    l = l.strip().split(',')  # Separates values by commas
+                    l = l.strip().split(',')  # Comma Separation
                     pt_x.append(float(l[1]))
                     pt_y.append(float(l[2]))
         except IOError:
-            print("Unable to read this file")  # Error handling feature if the file is not readable
+            print("Unable to read this file") 
 
-    def read_output(self, id_n, cat):  # Reads output
+    def read_output(self, id_n, cat): 
         try:
-            with open(self, 'r') as o: #Splits data into
+            with open(self, 'r') as o: 
                 lines = o.readlines()[1:]  # Removes the first line (id, Category)
                 for l in lines:
-                    l = l.strip().split(',')  # Separates values by commas
-                    id_n.append(str(l[0]))    # Appends the id number to a list
-                    cat.append(str(l[1]))     # Appends the categories to a list
+                    l = l.strip().split(',')  
+                    id_n.append(str(l[0]))    
+                    cat.append(str(l[1]))     
         except IOError:
-            print("Unable to read this file")  # Error handling feature if the file is not readable
+            print("Unable to read this file") 
 
-    # Function to merge x and y lists, in to lists  [x,y
+    # Merge x and y lists, in to lists  [x,y
     try:
         def generate_coordinates(self, p_x, p_y):
             return list(map(lambda x, y: (x, y), p_x, p_y))
     except IOError:
-        print("Unable to create coordinates")  # Error handling feature   
+        print("Unable to create coordinates") 
 
 
 # Function to define minimum and maximum bounds of the polygon
@@ -68,7 +69,7 @@ def ray_casting(pt, pg):  # Takes arguments pt - Point[x,y] and sh - polygon [x,
             if pt[0] < (pg[j][0] + vt * (pg[j + 1][0] - pg[j][0])):  # right / left intersect
                 counter += 1
         j += 1
-    return counter  # Returns the number of lines crossed
+    return counter  # Lines crossed counter 
 
 
 # Test for if the point is on the line
@@ -144,12 +145,16 @@ if __name__ == "__main__":
 
     # Points plotted with locations
     plotter = Plotter()
+    
     # Loop over each point
     for i in range(len(point_x)):
         plotter.add_point(point_x[i], point_y[i], category[i])
+        
     plotter.add_polygon(shape_x, shape_y)
+    
     plt.plot(shape_x, shape_y)
-    # Apply some annotations
+    
+    # Annotate
     plt.xlabel("x")
     plt.ylabel("y")
     plt.title("Point in Polygon Test")
