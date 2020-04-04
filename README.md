@@ -2,7 +2,7 @@
 
 Program to take a coordinate, and return the location with respect to a polygon. 
 
-## Here is an example of the output;
+## Output
 
 <img src="https://github.com/ThomasJames/2D_Point_Classifier/blob/master/Example%20of%20a%20result.png" width="500">
 
