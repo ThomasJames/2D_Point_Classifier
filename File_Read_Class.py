@@ -1,6 +1,6 @@
 class ReadFile:
 
-    def __init__(self, p_x, p_y, id_n, cat):
+    def __init__(self, p_x: float, p_y: float, id_n: int, cat: str):
         self.p_x = p_x
         self.p_y = p_y
         self.pt_x_list = []
